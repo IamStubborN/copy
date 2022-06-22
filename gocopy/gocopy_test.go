@@ -1,6 +1,7 @@
 package gocopy
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -75,6 +76,8 @@ func TestWriteFile(t *testing.T) {
 				t.Errorf("WriteFile() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
+			
+			fmt.Println("hello")
 
 			if got != tt.want {
 				t.Errorf("WriteFile() = %v, want %v", got, tt.want)
