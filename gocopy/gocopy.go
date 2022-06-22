@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 	"strings"
+
+	"github.com/google/uuid"
 )
 
 // WriteFile from path to path with offset and limit in bytes.
@@ -15,6 +17,8 @@ func WriteFile(from, to string, offset, limit int64) (int64, error) {
 		log.Fatal(err)
 	}
 	defer fileSource.Close()
+
+	fmt.Println(uuid.New().String())
 
 	fileDestination, err := os.Create(to)
 	if err != nil {
