@@ -1,14 +1,24 @@
 name: pr-test
 
-on: [pull_request]
+on: push
 
 jobs:
-  golangci-lint:
+  build:
     name: runner / golangci-lint
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v3
-
-      - name: golangci-lint
-        uses: reviewdog/action-golangci-lint@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '1.18.3' # The Go version to download (if necessary) and use.
+      - run: go version
+      - uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Series of commands
+        run: |
+          go test ./...
+          go build .
